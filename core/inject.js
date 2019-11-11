@@ -82,13 +82,13 @@ Blockly.inject = function(container, opt_options) {
 
   Blockly.svgResize(workspace);
 
-  subContainer.addEventListener('focus', function() {
+  subContainer.addEventListener('focusin', function() {
     Blockly.mainWorkspace = workspace;
   });
 
-  subContainer.addEventListener('blur', function() {
-    Blockly.mainWorkspace = null;
-  });
+  // subContainer.addEventListener('blur', function() {
+  //   Blockly.mainWorkspace = null;
+  // });
 
   return workspace;
 };
