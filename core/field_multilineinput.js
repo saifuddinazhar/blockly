@@ -25,7 +25,7 @@
 
 goog.provide('Blockly.FieldMultilineInput');
 
-goog.require('Blockly.Css');
+
 goog.require('Blockly.DropDownDiv');
 goog.require('Blockly.FieldTextInput');
 goog.require('Blockly.utils');
@@ -107,14 +107,28 @@ Blockly.FieldMultilineInput.prototype.getDisplayText_ = function() {
     // Prevent the field from disappearing if empty.
     return Blockly.Field.NBSP;
   }
+
+  // Auto wrap, counting letter count per line
+  var newValue = '';
+  var letterCountPerLine = 0;
+  for(var i=0; i<value.length; i++) {
+    letterCountPerLine++;
+    
+    // Add enter when letter count > max display length and char is space
+    if(letterCountPerLine > this.maxDisplayLength && value.charCodeAt(i) == 32) {
+      letterCountPerLine = 0;
+      newValue += '\n';
+    } else {
+      newValue += value.charAt(i);
+    }
+  }
+  value = newValue;
+
   var lines = value.split('\n');
   value = '';
   for (var i = 0; i < lines.length; i++) {
     var text = lines[i];
-    if (text.length > this.maxDisplayLength) {
-      // Truncate displayed string and add an ellipsis ('...').
-      text = text.substring(0, this.maxDisplayLength - 4) + '...';
-    }
+
     // Replace whitespace with non-breaking spaces so the text doesn't collapse.
     text = text.replace(/\s/g, Blockly.Field.NBSP);
 
@@ -143,6 +157,7 @@ Blockly.FieldMultilineInput.prototype.render_ = function() {
 
   // Add in text elements into the group.
   var lines = this.getDisplayText_().split('\n');
+
   var yOffset = Blockly.Field.Y_PADDING / 2;
   var y = 0;
   for (var i = 0; i < lines.length; i++) {
@@ -238,11 +253,6 @@ Blockly.FieldMultilineInput.prototype.widgetCreate_ = function() {
   htmlInput.style.fontSize = fontSize;
   var borderRadius = (Blockly.FieldTextInput.BORDERRADIUS * scale) + 'px';
   htmlInput.style.borderRadius = borderRadius;
-  var padding = Blockly.Field.DEFAULT_TEXT_OFFSET * scale;
-  htmlInput.style.paddingLeft = padding + 'px';
-  htmlInput.style.width = 'calc(100% - ' + padding + 'px)';
-  htmlInput.style.lineHeight =
-      (Blockly.FieldMultilineInput.LINE_HEIGHT * scale) + 'px';
 
   div.appendChild(htmlInput);
 
@@ -287,6 +297,5 @@ Blockly.Css.register([
   '}'
   /* eslint-enable indent */
 ]);
-
 
 Blockly.fieldRegistry.register('field_multilinetext', Blockly.FieldMultilineInput);
