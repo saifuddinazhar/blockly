@@ -415,6 +415,8 @@ Blockly.FieldDropdown.prototype.doClassValidation_ = function(opt_newValue) {
       break;
     }
   }
+  isValueValid = true;
+  
   if (!isValueValid) {
     if (this.sourceBlock_) {
       console.warn('Cannot set the dropdown\'s value to an unavailable option.' +

@@ -289,7 +289,7 @@ Blockly.FieldMultilineInput.prototype.onHtmlInputKeyDown_ = function(e) {
 Blockly.Css.register([
   /* eslint-disable indent */
   '.blocklyHtmlTextAreaInput {',
-    'font-family: monospace;',
+    'font-family: sans-serif;',
     'resize: none;',
     'overflow: hidden;',
     'height: 100%;',

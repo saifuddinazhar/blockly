@@ -537,6 +537,7 @@ Blockly.Xml.domToBlock = function(xmlBlock, workspace) {
     console.warn('Deprecated call to Blockly.Xml.domToBlock, ' +
                  'swap the arguments.');
   }
+
   // Create top-level block.
   Blockly.Events.disable();
   var variablesBeforeCreation = workspace.getAllVariables();

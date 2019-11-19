@@ -341,10 +341,6 @@ Blockly.Css.CONTENT = [
     'font-size: 11pt;',
   '}',
 
-  '.blocklyMultilineText {',
-    'font-family: monospace;',
-  '}',
-
   '.blocklyNonEditableText>text {',
     'pointer-events: none;',
   '}',
